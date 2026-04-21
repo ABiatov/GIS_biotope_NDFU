@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content="http://grasslands.in.ua/images/grasslands_in_ua_preview.jpg">
+		<meta property="og:title" content="Трав’яні біотопи України">
+   	    <meta property="og:site_name" content="grasslands.in.ua">
+   	    <meta property="og:url" content="http://grasslands.in.ua">
+        <meta property="og:description" content="">
+        <meta property="og:image" content="http://grasslands.in.ua/images/grasslands_in_ua_preview.jpg">
+		<link rel="icon" href="favicon.ico" />
+		
+        <link rel="stylesheet" href="css/leaflet.css">
+		<link rel="stylesheet" href="css/leaflet.zoomhome.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+		<link rel="stylesheet" href="css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap-toggle.css">
+		<link rel="stylesheet" href="css/magnific-popup.css">
+	
+		<link rel="stylesheet" href="map/app.css">
+		
+		<script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+		<script src="js/labels.js"></script>
+		<script src="js/leaflet.zoomhome.min.js"></script> 
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+	 	<script src="js/bootstrap-toggle.js"></script> 
+	 	<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!-- Magnific Popup core JS file -->
+        <script src="https://exogenica.abspatial.com/libs/magnific-popup/jquery.magnific-popup.js"></script>
+	    
+		
+
+        <title>Трав’яні біотопи України - Веб-ГІС</title>
+    </head>
+    <body>
+        <div id="heder">
+		<div ><table> 
+          <tr>
+            <td width="90"><a href="https://www.botany.kiev.ua/" target="_blank" title="Інститут ботаніки ім. М.Г. Холодного НАН України"><img src="images/iban_logo.png" height="40" hspace="5" vspace="7"></a><a href="https://nrfu.org.ua/" target="_blank" title="Національний фонд досліджень України"><img src="images/nrfu_logo.png" height="40" hspace="0" vspace="7"></a></td><td><h1>Трав’яні біотопи України</h1></td><td> <a class="popup-content" style="text-align: right;" href="#text-info-popup" title="Інформація про сайт">
+				   	<div class="info_button" >&#8505;</div> 
+				   </a> </td>
+          </tr>
+        </table></div>
+	<!--	<div id="btn_general_info" title="Інформація про сайт" ><a class="simple-ajax-popup" href="infopages/x36_ua.html"><div class="info_button" >&#8505;</div> </a></div>  -->
+		</div>
+		<div id="text-info-popup" class="white-popup mfp-hide">
+		<h2>Трав’яні біотопи України</h2>
+<p>Розробку сайту здійснено в рамках проєкту Національного фонду досліджень України «Трав'яні біотопи України загальноєвропейського значення: сучасний стан, масштаби втрат та стратегія збереження в умовах глобальних кліматичних змін і антропогенної трансформації довкілля» (2020.01/0140)</p>
+</div>
+		
+		<div id="map">
+		    <div id="menu_groups">
+		    	<div >
+			    <a class="button_group" href="#popup_group_1">
+				    <img src="images/grid_maps_pic.png" class="menu_groups_fig" title="Сіткові карти трав’яних біотопів">
+			    </a>
+				</div>
+			    <div >
+				<a class="button_group" href="#popup_group_2">
+			        <img src="images/predicted_distribution_pic.png" class="menu_groups_fig" title="Прогнозоване поширення трав’яних біотопів">
+				</a>
+			    </div>
+				<div >
+				<a class="button_group" href="#popup_group_3">
+			        <img src="images/distribution_of_grassland_pic.png" class="menu_groups_fig" title="Автоматизоване дешифрування трав’яних біотопів">
+				</a>
+			    </div>
+            </div>
+			
+			
+			
+			<div id="popup_group_1" class="overlay_groups">
+				<div class="popup_groups">
+					<h2>Сіткові карти трав’яних біотопів</h2>
+					<a class="close" href="#">&times;</a>
+					<div class="content">
+					<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridx36_59)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>x36 - Депресії (поди) степової зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/x36_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr65_58)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r65 - Внутрішньоконтинентальні слабо засолені алювіальні пасовища і сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r65_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr64_57)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r64 - Напівпустельні солончаки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r64_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr63_56)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r63 - Внутрішньоконтинентальні солончаки помірної зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r63_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr62_55)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r62 - Внутрішньоконтинентальні засолені степи</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r62_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr56_54)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r56 - Мокрі або вологі високотравні та папоротеві узлісся субальпійського поясу</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r56_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr55_53)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r55 - Мокрі або вологі високотравні та папоротеві узлісся рівнинних регіонів</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r55_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr51_52)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r51 - Термофільні узлісся на карбонатних грунтах</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r51_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr44_51)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r44 - Аркто-альпійські карбонатні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r44_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr43_50)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r43 - Ацидофільні альпійські луки помірної зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r43_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr41_49)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r41 - Сніжники, вкриті рослинністю</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r41_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr37_48)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r37 - Мокрі або вологі оліготрофні луки помірної і бореальної зон</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r37_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr36_47)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r36 - Мокрі або вологі мезотрофні та евтрофні пасовища</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r36_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr35_46)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r35 - Мокрі або вологі мезотрофні та евтрофні сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r35_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr23_45)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r23 - Гірські сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r23_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr22_44)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r22 - Рівнинні та низькогірні сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r22_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr21_43)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r21 - Мезофільні постійні пасовища рівнинних і гірських регіонів</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r21_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr18_42)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r18 - Петрофітні степи на карбонатних породах субатлантичних і субсередземноморських регіонів Європи з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r18_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr16_41)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r16 - Петрофітні степи Центральної Європи і Карпат з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r16_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr15_40)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r15 - Континентальні остепнені трав’яні і  чагарничкові угруповання на відслоненнях крейди</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r15_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr13_39)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r13 - Рослинність з домінуванням криптогамних і однорічних рослин на карбонатних і ультраосновних відслоненнях</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r13_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr12_38)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r12 - Рослинність з домінуванням криптогамних і однорічних рослин на силікатних відслоненнях</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r12_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr11_37)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r11 - Паннонські і Понтичні піщані степи</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r11_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1q_36)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1q - Внутрішньоконтинентальні піщані наноси і дюни з трав’яними угрупованнями на силікатних пісках</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1q_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1p_35)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1p - Внутрішньоконтинентальні піщані угруповання на сухих кислих або нейтральних грунтах океанічних і субконтинентальних регіонів</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1p_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1mNardus_34)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1m - Рівнинні до низькогірних, сухі до мезофітних угруповання з домінуванням Nardus</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1m_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1c_33)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1c - Пустельні степи</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1c_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1b_32)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1b - Континентальні сухі степи</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1b_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_gridr1a_31)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1a - Кальцифітні лучні степи з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1a_ua.html"><div class="info_button" >&#8505;</div> </a> </div>
+				</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="popup_group_2" class="overlay_groups">
+				<div class="popup_groups">
+					<h2>Прогнозоване поширення трав’яних біотопів</h2>
+					<a class="close" href="#">&times;</a>
+					<div class="content">
+	<!--		<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, _LAYER_LAYER_LAYER_)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME, COD - NAME</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" >
+				    <div class="info_button" onclick="openInfoPopup(_layer_name_info_)" >&#8505;</div>
+				  </div>
+				</div>  -->
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_x36_30)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>x36 - Депресії (поди) степової зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/x36_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r65_29)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r65 - Внутрішньоконтинентальні слабо засолені алювіальні пасовища і сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r65_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r64_28)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r64 - Напівпустельні солончаки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r64_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r63_27)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r63 - Внутрішньоконтинентальні солончаки помірної зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r63_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r62_26)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r62 - Внутрішньоконтинентальні засолені степи</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r62_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r56_25)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r56 - Мокрі або вологі високотравні та папоротеві узлісся субальпійського поясу</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r56_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r55_24)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r55 - Мокрі або вологі високотравні та папоротеві узлісся рівнинних регіонів</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r55_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r51_23)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r51 - Термофільні узлісся на карбонатних грунтах</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r51_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r44_22)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r44 - Аркто-альпійські карбонатні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r44_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r43_21)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r43 - Ацидофільні альпійські луки помірної зони</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r43_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r37_20)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r37 - Мокрі або вологі оліготрофні луки помірної і бореальної зон</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r37_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r36_19)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r36 - Мокрі або вологі мезотрофні та евтрофні пасовища</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r36_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r35_18)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r35 - Мокрі або вологі мезотрофні та евтрофні сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r35_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r23_17)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r23 - Гірські сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r23_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r22_16)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r22 - Рівнинні та низькогірні сінокісні луки</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r22_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r21_15)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r21 - Мезофільні постійні пасовища рівнинних і гірських регіонів</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r21_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r18_14)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r18 - Петрофітні степи на карбонатних породах субатлантичних і субсередземноморських регіонів Європи з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r18_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r16_13)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r16 - Петрофітні степи Центральної Європи і Карпат з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r16_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r15_12)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r15 - Континентальні остепнені трав’яні і  чагарничкові угруповання на відслоненнях крейди</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r15_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r13_11)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r13 - Рослинність з домінуванням криптогамних і однорічних рослин на карбонатних і ультраосновних відслоненнях</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r13_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r12_10)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r12 - Рослинність з домінуванням криптогамних і однорічних рослин на силікатних відслоненнях</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r12_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r11_9)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r11 - Паннонські і Понтичні піщані степи</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r11_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1q_8)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1q - Внутрішньоконтинентальні піщані наноси і дюни з трав’яними угрупованнями на силікатних пісках</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1q_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1p_7)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1p - Внутрішньоконтинентальні піщані угруповання на сухих кислих або нейтральних грунтах океанічних і субконтинентальних регіонів</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1p_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1mNardus_6)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1m - Рівнинні до низькогірних, сухі до мезофітних угруповання з домінуванням Nardus</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1m_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1c_5)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1c - Пустельні степи</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1c_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1b_4)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1b - Континентальні сухі степи</h3>
+				  </div>
+				    <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1b_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+				<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_r1a_3)" >
+				  </div>
+				  <div class="content_element">
+                    <h3>r1a - Кальцифітні лучні степи з домінуванням багаторічників</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/r1a_ua.html"><div class="info_button" >&#8505;</div> </a></div>
+				</div>
+
+					</div>
+				</div>
+			</div>
+			
+<div id="popup_group_3" class="overlay_groups">
+				<div class="popup_groups">
+					<h2>Автоматизоване дешифрування трав’яних біотопів</h2>
+					<a class="close" href="#">&times;</a>
+					<div class="content">
+					<div class="menu_layer">
+				  <div class="toggle_element">
+				    <input id="toggle-3" type="checkbox" data-toggle="toggle" data-style="ios" data-size="small" class="layer-checkbox" onchange="processCheck(this, layer_southern_bug_class)" > -
+				  </div>
+				  <div class="content_element">
+                    <h3>Біотопи Національного природного парку “Бузький Гард”</h3>
+				  </div>
+				  <div class="info_element" title="Інформація про шар" ><a class="simple-ajax-popup" href="infopages/southern_bug_class_ua.html"><div class="info_button" >&#8505;</div> </a> <!-- Загрузить страницу в мод. окне Ajax -->
+				   <!--
+				   
+				   ДОРAБОТAТЬ КНОППКУ ПО ИНСТРУКЦИИ ПО СОЗДAНИЮ ВСПЛЫВAЮЩИХ ОКОН
+				   
+				   -->
+				<!--   <input type="image" class="info_button" src="images/img_info_button.png" onclick="openInfoPopup()" >  -->
+				  </div>
+				</div>
+				
+
+					</div>
+				</div>
+			</div>
+
+
+        </div>
+        
+		<script src="map/app.js" type="text/javascript"></script>
+		
+		
+		<script>
+
+/*	
+var layers_Predicted = [
+    layer_r1a_3, layer_r1b_4, layer_r1c_5, layer_r1mNardus_6, layer_r1p_7, 
+    layer_r1q_8, layer_r11_9, layer_r12_10, layer_r13_11, layer_r15_12, 
+	layer_r16_13, layer_r18_14, layer_r21_15, layer_r22_16, layer_r23_17,
+	layer_r35_18, layer_r36_19, layer_r37_20, layer_r43_21, layer_r44_22,
+	layer_r51_23, layer_r55_24, layer_r56_25, layer_r62_26, layer_r63_27,
+	layer_r64_28, layer_r65_29,layer_x36_30
+	]; 
+	
+var layers_grid	= [
+    layer_gridr1a_31, layer_gridr1b_32, layer_gridr1c_33, layer_gridr1mNardus_34, layer_gridr1p_35,
+    layer_gridr1q_36, layer_gridr11_37, layer_gridr12_38, layer_gridr13_39, layer_gridr15_40, 
+	layer_gridr16_41, layer_gridr18_42, layer_gridr21_43, layer_gridr22_44, layer_gridr23_45,
+	layer_gridr35_46, layer_gridr36_47, layer_gridr37_48, layer_gridr41_49, layer_gridr43_50,
+	layer_gridr44_51, layer_gridr51_52, layer_gridr55_53, layer_gridr56_54, layer_gridr62_55,
+	layer_gridr63_56, layer_gridr64_57, layer_gridr65_58, layer_gridx36_59
+    ];
+	*/
+	
+	
+  
+    function processCheck(checkbox, myLayer) {
+        if (checkbox.checked) {
+		  map.addLayer(myLayer);
+		  }
+        else {
+		  map.removeLayer(myLayer);
+        }
+      }
+			   
+  	map.addLayer(layer_r1a_3)
+	map.addLayer(layer_gridr1a_31)
+			
+
+// Тип Ajax - загрузка контента в модальном окне
+$(document).ready(function() {
+/*
+	$('.simple-ajax-popup-align-top').magnificPopup({
+		type: 'ajax',
+		alignTop: true,
+		overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
+	});
+*/
+    $('.popup-content').magnificPopup({
+        type: 'inline'
+    });
+
+	$('.simple-ajax-popup').magnificPopup({
+		type: 'ajax',
+		midClick: true/*,
+		preloader: false,
+        closeBtnInside: true,
+        closeOnBgClick:  false,
+        modal: true   */
+	});
+	$(document).on('click', '.popup-modal-dismiss', function(e) {
+        e.preventDefault();
+        $.magnificPopup.close();
+	});
+});
+/*
+
+ajax: {
+  settings: null, // Ajax settings object that will extend default one - http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings
+  // For example:
+  // settings: {cache:false, async:false}
+
+  cursor: 'mfp-ajax-cur', // CSS class that will be added to body during the loading (adds "progress" cursor)
+  tError: '<a href="%url%">The content</a> could not be loaded.' //  Error message, can contain %curr% and %total% tags if gallery is enabled
+}
+
+
+callbacks: {
+  parseAjax: function(mfpResponse) {
+    // mfpResponse.data is a "data" object from ajax "success" callback
+    // for simple HTML file, it will be just String
+    // You may modify it to change contents of the popup
+    // For example, to show just #some-element:
+    // mfpResponse.data = $(mfpResponse.data).find('#some-element');
+
+    // mfpResponse.data must be a String or a DOM (jQuery) element
+
+    console.log('Ajax content loaded:', mfpResponse);
+  },
+  ajaxContentAdded: function() {
+    // Ajax content is loaded and appended to DOM
+    console.log(this.content);
+  }
+}
+
+*/
+
+
+		</script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZB6HYD0B40"></script>
+        <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZB6HYD0B40');
+  </script>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Трав’яні біотопи України</title>
+	<link rel="icon" href="css/ico/favicon.ico"/>
+	<meta charset="utf-8"/>
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="http://grasslands.in.ua/images/grasslands_in_ua_preview.jpg">
+	<meta property="og:title" content="Трав’яні біотопи України">
+    <meta property="og:site_name" content="grasslands.in.ua">
+    <meta property="og:url" content="http://grasslands.in.ua">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="http://grasslands.in.ua/images/grasslands_in_ua_preview.jpg">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src='checkMobile.js'></script>
+	<script src='leaflet/leaflet.js'></script>
+	<link rel="stylesheet" href="leaflet/leaflet.css"/>		
+</head>
+<body>
+<!-------------------------------------------------------------------->
+<div id="pnlTop">
+<a href="https://www.botany.kiev.ua/index.htm" target="blank">
+	<div id="pnlTopImgL"></div>
+	</a>
+<a href="https://nrfu.org.ua/" target="blank">
+  <div id="pnlTopImgR"></div>
+  </a>
+  <div id="pnlTopText"></div>
+  <div id="pnlTopInfo"></div>
+  </div>
+<!-------------------------------------------------------------------->
+<div id="pnlAbout" class="visOff">
+	<div id="btnAboutClose" class="btnClose"></div>
+	<h4>Трав’яні біотопи України</h4>
+	Розробку сайту здійснено в рамках проєкту Національного фонду досліджень України «Трав'яні біотопи України загальноєвропейського значення: сучасний стан, масштаби втрат та стратегія збереження в умовах глобальних кліматичних змін і антропогенної трансформації довкілля» (2020.01/0140)	
+	</div>
+<!-------------------------------------------------------------------->
+<div id="map"></div>
+<!-------------------------------------------------------------------->
+<div id="pnlMenu"></div>
+<!-------------------------------------------------------------------->
+<div id="btnZoomIn"></div>
+<div id="btnZoomOut"></div>
+<div id="btnZoomHome"></div>
+<!-------------------------------------------------------------------->
+<div id="pnlLayer" class="visOn">
+  <div id="pnlLayerHead">
+	<div id="lblBaseMaps"><b>Базові карти</b></div>
+	<div id="radioDarkText" class="radioOn"></div>
+	<div id="radioGoogleText" class="radioOff"></div>
+	<div id="radioOSMText" class="radioOff"></div>
+	<div id="lblOverMaps"><b>Тематичні шари даних</b></div>
+	</div>
+  <div id="btnClosepnlLayer" class="btnClose"></div>
+  <div id="pnlLayerContent"></div>
+  </div>
+<!-------------------------------------------------------------------->
+<div id="pnlInfo" class="visOff">
+	<div id="pnlInfoContent"></div>
+	<div id="btnClosepnlInfo" class="btnClose visOn"></div>	
+	</div>
+ <!-------------------------------------------------------------------->
+<div id="pnlPDF" class="visOff">
+	<iframe id="framePDF" seamless allowtransparency></iframe>
+	</div>
+	<div id="btnClosepnlPDF" class="btnClose visOff"></div>
+<!-------------------------------------------------------------------->
+<script src='data.js'></script>
+<script src='core.js'></script>
+<!-------------------------------------------------------------------->
+</body>
+</html>
+
